@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        label {
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #qrcode {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>MANUFACTURER DETAILS</h1>
+    <form id="detailsForm">
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" name="productName" required>
+
+        <label for="productId">Product ID/Code:</label>
+        <input type="text" id="productId" name="productId" required>
+
+        <label for="brandName">Brand Name:</label>
+        <input type="text" id="brandName" name="brandName" required>
+
+        <label for="modelNumber">Model Number:</label>
+        <input type="text" id="modelNumber" name="modelNumber" required>
+
+        <label for="productCategory">Product Category:</label>
+        <input type="text" id="productCategory" name="productCategory" required>
+
+        <button type="button" onclick="generateQR()">Generate QR Code</button>
+    </form>
+    
+    <div id="qrcode"></div>
+
+    <script>
+        function generateQR() {
+            // Fetch input values
+            const productName = document.getElementById("productName").value;
+            const productId = document.getElementById("productId").value;
+            const brandName = document.getElementById("brandName").value;
+            const modelNumber = document.getElementById("modelNumber").value;
+            const productCategory = document.getElementById("productCategory").value;
+
+            // Combine data into a single string
+            const data = `
+                Product Name: ${productName}
+                Product ID/Code: ${productId}
+                Brand Name: ${brandName}
+                Model Number: ${modelNumber}
+                Product Category: ${productCategory}
+            `;
+
+            // Generate QR Code
+            const qrCodeContainer = document.getElementById("qrcode");
+            qrCodeContainer.innerHTML = ""; // Clear previous QR Code
+
+            QRCode.toCanvas(data, function (err, canvas) {
+                if (err) {
+                    console.error(err);
+                } else {
+                    qrCodeContainer.appendChild(canvas);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
